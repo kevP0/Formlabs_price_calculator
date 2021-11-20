@@ -6,21 +6,27 @@ EUR_TO_DOLLAR = 1.13
 MINUTES_IN_HOUR = 60
 SECONDS_IN_MINUTE = 60
 MILLILITERS_IN_LITER = 1000
+W_IN_KW = 1000
 # Prices are in Euro
 PRICE_1L_MODEL_RESIGN = 165
 PRICE_NEW_FORM_3B = 5640
 PRICE_NEW_RESIGN_TANK = 165
+PRICE_KW_ELECTRICITY = 0.2
 # Data is in minutes
 LIFETIME_RESIGN_TANK = 36000
 # Data represents cycles
 LIFETIME_PRINTER_PARTS = 2000000
-
+# Power consumption for Form 3B in watts
+POWER_CONSUMPTION_PER_HOUR = 220
 # Calculations
 # Price for milliliter of resign
 PRICE_PER_MILLILITER_MODEL_RESIGN = PRICE_1L_MODEL_RESIGN / MILLILITERS_IN_LITER
 
-# Price for second of printer work
-PRICE_PER_MINUTE_OF_PRINTER_WORK = PRICE_NEW_RESIGN_TANK / (LIFETIME_RESIGN_TANK)
+# Price of electricity per minute
+PRICE_OF_ELECTRICITY_PER_MINUTE = (PRICE_KW_ELECTRICITY / W_IN_KW) * (POWER_CONSUMPTION_PER_HOUR / MINUTES_IN_HOUR)
+
+# Price for minute of printer work
+PRICE_PER_MINUTE_OF_PRINTER_WORK = PRICE_NEW_RESIGN_TANK / (LIFETIME_RESIGN_TANK) + PRICE_OF_ELECTRICITY_PER_MINUTE
 
 # Price for layer of print
 PRICE_PER_LAYER_OF_PRINT = PRICE_NEW_FORM_3B / LIFETIME_PRINTER_PARTS
@@ -51,7 +57,7 @@ languages = [[
         "Show prices (Y/N): "       
     ]]
 
-
+### FIX
 # Prints expense of differnt parameters
 # Price for mililiter of resign
 # Price for minute of print
@@ -59,18 +65,18 @@ languages = [[
 def print_calculated_expenses(lang):
     # Selected language is slovenian
     if lang == languages[0][0]:
-        print(languages[0][5] + str(PRICE_PER_MILLILITER_MODEL_RESIGN))
-        print(languages[0][6] + str(PRICE_PER_MINUTE_OF_PRINTER_WORK))
-        print(languages[0][7] + str(PRICE_PER_LAYER_OF_PRINT))
+        print(languages[0][6] + str(PRICE_PER_MILLILITER_MODEL_RESIGN))
+        print(languages[0][7] + str(PRICE_PER_MINUTE_OF_PRINTER_WORK))
+        print(languages[0][8] + str(PRICE_PER_LAYER_OF_PRINT))
     else:
-        print(languages[0][5] + str(PRICE_PER_MILLILITER_MODEL_RESIGN))
-        print(languages[0][6] + str(PRICE_PER_MINUTE_OF_PRINTER_WORK))
-        print(languages[0][7] + str(PRICE_PER_LAYER_OF_PRINT))
+        print(languages[0][6] + str(PRICE_PER_MILLILITER_MODEL_RESIGN))
+        print(languages[0][7] + str(PRICE_PER_MINUTE_OF_PRINTER_WORK))
+        print(languages[0][8] + str(PRICE_PER_LAYER_OF_PRINT))
 
     
 # Show calculated expenses
 def show_expenses(show, lang):
-    if show == "Y":
+    if show.upper() == "Y":
         print_calculated_expenses(lang)
 
    
@@ -143,5 +149,4 @@ collect_inputs(lang)
 minutes = time_str_to_minutes(print_time)
 cena = price_calculation(float(layers), float(minutes), float(volume_of_print))
 print_calcualted_price(lang, cena)
-
 #END
