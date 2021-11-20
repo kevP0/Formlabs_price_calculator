@@ -32,7 +32,11 @@ languages = [[
         "Vnesite stevilo plasti: ",
         "Vnesite cas printanja (ure in minute locite s piko): ",
         "Vnesite volumen izdelka v mililitrih: ",
-        "Cena printanja je "
+        "Cena printanja je ",
+        "Cena za mililiter model resign: ",
+        "Cena za minuto tiskanja: ",
+        "Cena za plast tiskanja: ",
+        "Pokazi cene (Y/N): "
     ],
     [
         "ENG",
@@ -40,8 +44,36 @@ languages = [[
         "Enter number of layers: ",
         "Enter print time (seperate hours and minutes with dot): ",
         "Enter print volume in mililiters: ",
-        "Print price is "
+        "Print price is ",
+        "Price for milliliter of model resign: ",
+        "Price for minute of print: ",
+        "Price for layer of print: " ,
+        "Show prices (Y/N): "       
     ]]
+
+
+# Prints expense of differnt parameters
+# Price for mililiter of resign
+# Price for minute of print
+# Price for layer of print
+def print_calculated_expenses(lang):
+    # Selected language is slovenian
+    if lang == languages[0][0]:
+        print(languages[0][5] + str(PRICE_PER_MILLILITER_MODEL_RESIGN))
+        print(languages[0][6] + str(PRICE_PER_MINUTE_OF_PRINTER_WORK))
+        print(languages[0][7] + str(PRICE_PER_LAYER_OF_PRINT))
+    else:
+        print(languages[0][5] + str(PRICE_PER_MILLILITER_MODEL_RESIGN))
+        print(languages[0][6] + str(PRICE_PER_MINUTE_OF_PRINTER_WORK))
+        print(languages[0][7] + str(PRICE_PER_LAYER_OF_PRINT))
+
+    
+# Show calculated expenses
+def show_expenses(show, lang):
+    if show == "Y":
+        print_calculated_expenses(lang)
+
+   
 # Function that calculates price of print
 def price_calculation(layers, print_time, volume_of_print):
     price = layers * PRICE_PER_LAYER_OF_PRINT
@@ -49,21 +81,29 @@ def price_calculation(layers, print_time, volume_of_print):
     price += volume_of_print * PRICE_PER_MILLILITER_MODEL_RESIGN 
     return round(price, 2)
 
+
 # Function to collect all needed inputs
 def collect_inputs(lang):
     global layers
     global print_time 
     global volume_of_print
+    global show_exp
+    
     # Selected language is slovenian
     if lang == languages[0][0]:
+        show_exp = input(languages[0][9])
+        show_expenses(show_exp, lang)
         layers = input(languages[0][2])
         print_time = input(languages[0][3])
         volume_of_print = input(languages[0][4])
     # Language is not supported so default english
     else:
+        show_exp = input(languages[1][9])
+        show_expenses(show_exp, lang)
         layers = input(languages[1][2])
         print_time = input(languages[1][3])
         volume_of_print = input(languages[1][4])
+
 
 # Print of appliction name
 def print_app_name(lang):
@@ -74,6 +114,7 @@ def print_app_name(lang):
     else:
         print(languages[1][1] + line + "\n")
 
+
 # Calculates time in minutes       
 def time_str_to_minutes(print_time):
     # convert string to minutes and hours
@@ -83,8 +124,9 @@ def time_str_to_minutes(print_time):
         return int(time[0]) * MINUTES_IN_HOUR + int(time[1])
     return int(time[0]) * MINUTES_IN_HOUR
 
+
 # Prints calculated price    
-def print_price(lang, cena):
+def print_calcualted_price(lang, cena):
     # Selected language is slovenian
     if lang == languages[0][0]:
         output = languages[0][5] + " " + str(cena)
@@ -92,16 +134,14 @@ def print_price(lang, cena):
         output = languages[1][5] + " " + str(cena)  
     print(output)      
 
-print("Price for milliliter of model resign: " + str(PRICE_PER_MILLILITER_MODEL_RESIGN))
-print("Price for minute of print: " + str(PRICE_PER_MINUTE_OF_PRINTER_WORK))
-print("Price for layer of print: " + str(PRICE_PER_LAYER_OF_PRINT))
-
+#MAIN FUNCTION
+#BEGIN
 #Languange selection
 lang = input("Choose languge (SLO or ENG): ").upper()
-
 print_app_name(lang)
 collect_inputs(lang)
 minutes = time_str_to_minutes(print_time)
 cena = price_calculation(float(layers), float(minutes), float(volume_of_print))
-print_price(lang, cena)
+print_calcualted_price(lang, cena)
 
+#END
