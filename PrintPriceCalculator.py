@@ -36,6 +36,7 @@ print("Price for milliliter of model resign: " + str(PRICE_PER_MILLILITER_MODEL_
 print("Price for minute of print: " + str(PRICE_PER_MINUTE_OF_PRINTER_WORK))
 print("Price for layer of print: " + str(PRICE_PER_LAYER_OF_PRINT))
 
+# TO DO languge selection needed
 print("POZDRAVLJENI V KALKULATRJU CENE ZA FORM 3B\n")
 print("------------------------------------------\n")
 
