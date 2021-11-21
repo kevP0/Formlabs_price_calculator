@@ -35,26 +35,30 @@ PRICE_PER_LAYER_OF_PRINT = PRICE_NEW_FORM_3B / LIFETIME_PRINTER_PARTS
 languages = [[
         "SLO",
         "POZDRAVLJENI V KALKULATORJU STROSKOV ZA FORMLABS TISKALNIKE\n",
-        "Vnesite stevilo plasti: ",
-        "Vnesite cas printanja (ure in minute locite s piko): ",
-        "Vnesite volumen izdelka v mililitrih: ",
+        "Vnesite stevilo plasti ",
+        "Vnesite cas printanja ",
+        "Vnesite volumen izdelka ",
         "Cena printanja je ",
         "Cena za mililiter model resign: ",
         "Cena za minuto tiskanja: ",
         "Cena za plast tiskanja: ",
-        "Pokazi cene (Y/N): "
+        "Izracun cene ",
+        "ur",
+        "minut"
     ],
     [
         "ENG",
         "WELCOME TO FORMLABS PRINTER EXPENSES CALCULATOR\n",
-        "Enter number of layers: ",
-        "Enter print time (seperate hours and minutes with dot): ",
-        "Enter print volume in mililiters: ",
+        "Enter number of layers ",
+        "Enter print time ",
+        "Enter print volume ",
         "Print price is ",
         "Price for milliliter of model resign: ",
         "Price for minute of print: ",
         "Price for layer of print: " ,
-        "Show prices (Y/N): "       
+        "Calculate price ",
+        "hours",
+        "minutes"      
     ]]
 
 ### FIX
@@ -131,22 +135,22 @@ def time_str_to_minutes(print_time):
     return int(time[0]) * MINUTES_IN_HOUR
 
 
-# Prints calculated price    
-def print_calcualted_price(lang, cena):
+# Returns calculated price    
+def calcualted_price_str(lang, cena):
     # Selected language is slovenian
     if lang == languages[0][0]:
         output = languages[0][5] + " " + str(cena)
     else:
         output = languages[1][5] + " " + str(cena)  
-    print(output)      
+    return output      
 
 #MAIN FUNCTION
 #BEGIN
 #Languange selection
-lang = input("Choose languge (SLO or ENG): ").upper()
-print_app_name(lang)
-collect_inputs(lang)
-minutes = time_str_to_minutes(print_time)
-cena = price_calculation(float(layers), float(minutes), float(volume_of_print))
-print_calcualted_price(lang, cena)
+#lang = input("Choose languge (SLO or ENG): ").upper()
+#print_app_name(lang)
+#collect_inputs(lang)
+#minutes = time_str_to_minutes(print_time)
+#cena = price_calculation(float(layers), float(minutes), float(volume_of_print))
+#print(calcualted_price(lang, cena))
 #END
